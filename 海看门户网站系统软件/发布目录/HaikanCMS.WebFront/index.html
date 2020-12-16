@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浙江工业大学化学化工实验教学中心</title>
+    <link rel="shortcut icon" href="./logo.ico" type="image/x-icon">
+    <script src="./lib/js/vue.js"></script>
+    <link rel="stylesheet" href="./lib/css/common.css">
+    <link rel="stylesheet" href="./lib/css/header.css">
+    <link rel="stylesheet" href="./lib/css/index.css">
+    <link rel="stylesheet" href="./lib/css/footer.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:100,300,400,500,700,900">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./node_modules/element-ui/lib/theme-chalk/index.css">
+    <style>
+        table {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            box-sizing: border-box;
+            border-spacing: 0;
+            margin: 20px auto;
+        }
+
+        tr {
+            box-sizing: border-box;
+            border-spacing: 0;
+        }
+
+        td {
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            box-sizing: border-box;
+            border-spacing: 0;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="main">
+            <!-- 页面头部 -->
+            <header>
+                <div class="headBox">
+                    <img style="width: 100%;object-fit: contain;" src="./static/images/banner.png" alt="">
+                    <img src="./static/images/zjgylogo.png" alt=""
+                        style="position: absolute;top: 50%;left: 0;transform: translateY(-50%);width: 100%;">
+                </div>
+                <nav class="tabsBox">
+                    <ul style="overflow: hidden;">
+                        <li class="tabsItem" @click="toIndex" :class="{activeItem:currentItem==-1}"><span>首页</span></li>
+                        <li v-for="(item,index) in tabslist" class="tabsItem" :class="{activeItem:currentItem==index}"
+                            @click="toItemInfo(index,item)">
+                            <span :class="[index == tabslist_len-1 ? 'lastSpan' : '']">{{item.name}}</span>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <!-- 页面主体 -->
+            <div class="mainCon">
+                <div class="mainTop">
+                    <!-- 首页 -->
+                    <section v-if="currentPage==1">
+                        <div class="conLeft">
+                            <!-- 预约共享 -->
+                            <section class="cardBox orderShare">
+                                <div class="cardHead">
+                                    <div class="cardHeadTitle">预约共享</div>
+                                    <div class="cardHeadMore" @click="toOrderShare(0)">
+                                        <a>
+                                            more
+                                            <i class="el-icon-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="cardBody" style="padding: 5px 10px;height: 116px;overflow-y: auto;">
+                                    <ul>
+                                        <li v-for="(item,index) in orderShareList" @click="toOrderShare(index)"
+                                            style="cursor: pointer;">
+                                            <div class="cardBodyLiItemBox"
+                                                style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">
+                                                <i class="el-icon-arrow-right"></i>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                            <!-- <div class="cardBodyLiTimeBox">
+                                                <span class="cardBodyLiTime">{{item.time}}</span>
+                                                <div class="dotLine"></div>
+                                            </div> -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <!-- 国家级精品课程 -->
+                            <section class="cardBox elaborateCourse">
+                                <div class="courseBox">
+                                    <div class="courseBoxHead" style="display: flex;font-size: 14px;padding: 0 10px;">
+                                        <div class="cardHeadTitle">国家级精品课程</div>
+                                        <div class="cardHeadMore" @click="toElaborateCourse">
+                                            <a>more
+                                                <i class="el-icon-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="courselis">
+                                        <div class="courseItemBox" v-for="(item,index) in countryCourse">
+                                            <div class="circle"></div>
+                                            <div class="courseItem">{{item.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="courseBox">
+                                    <div class="courseBoxHead" style="display: flex;font-size: 14px;padding: 0 10px;">
+                                        <div class="cardHeadTitle">国家级虚拟仿真实验教学示范型项目</div>
+                                    </div>
+                                    <div class="courselis">
+                                        <div class="courseItemBox" v-for="(item,index) in virtualCourse">
+                                            <div class="circle"></div>
+                                            <div class="courseItem">{{item.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="courseBox">
+                                    <div class="courseBoxHead" style="display: flex;font-size: 14px;padding: 0 10px;">
+                                        <div class="cardHeadTitle">省级精品</div>
+                                    </div>
+                                    <div class="courselis" style="height: 90px;">
+                                        <div class="courseItemBox" v-for="(item,index) in provincialCourse"
+                                            style="width: 50%;">
+                                            <div class="circle"></div>
+                                            <div class="courseItem"
+                                                style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">
+                                                {{item.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- 站内搜索 -->
+                            <section class="cardBox webSearch">
+                                <div class="cardHead">
+                                    <div class="cardHeadTitle">站内搜索</div>
+                                </div>
+                                <div class="cardBody">
+                                    <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="inpWebSearch"
+                                        @change="searchRes" size="small">
+                                    </el-input>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="conMiddle">
+                            <!-- 中心风采 -->
+                            <section class="cardBox centerColorful">
+                                <div class="cardHead">
+                                    <div class="cardHeadTitle">中心风采</div>
+                                    <!-- <div class="cardHeadMore">
+                                        <a href="javascript:#;">more
+                                            <i class="el-icon-arrow-right"></i>
+                                        </a>
+                                    </div> -->
+                                </div>
+                                <div class="cardBody">
+                                    <div class="centerColorfulSwiper">
+                                        <el-carousel :interval="3000" height="180px">
+                                            <el-carousel-item v-for="(item,index) in swiperlist" :key="index">
+                                                <img :src="baseApi+'UploadFiles/NesFile/Picture/'+item" alt=""
+                                                    style="width:100%;height:180px;object-fit: cover;" />
+                                            </el-carousel-item>
+                                        </el-carousel>
+                                    </div>
+                                    <div class="centerColorfulCont">
+                                        <div class="centerColorfulContTitle">
+                                            中心简介
+                                        </div>
+                                        <div class="centerColorfulDes">
+                                            {{centerMesg}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="conMiddle_l">
+                                <!-- 新闻动态 -->
+                                <section class="cardBox newsTrends">
+                                    <div class="cardHead">
+                                        <div class="cardHeadTitle">新闻动态</div>
+                                        <div class="cardHeadMore" @click="toNewsTrends(0)">
+                                            <a>more
+                                                <i class="el-icon-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="cardBody">
+                                        <div style="overflow: hidden;">
+                                            <div class="newsTrendsSwiper">
+                                                <el-carousel :interval="3000" arrow="never" height="100px"
+                                                    indicator-position="none">
+                                                    <el-carousel-item v-for="(item,index) in newsTrendsList0.picture"
+                                                        :key="index">
+                                                        <img :src="baseApi+'UploadFiles/NesFile/Picture/'+item" alt=""
+                                                            style="width: 100%;height: 100px;object-fit: cover;">
+                                                    </el-carousel-item>
+                                                </el-carousel>
+                                            </div>
+                                            <div class="newsTrendsCont" style="cursor: pointer;">
+                                                <div class="newsTrendsContTitle">
+                                                    <!-- “高端激光制造装备省部共建协同创新中心”启动仪式暨... -->
+                                                    {{newsTrendsList0.name}}
+                                                </div>
+                                                <div class="newsTrendsDes" @click="toNewsTrends(0)">
+                                                    <!-- 10月31日，“高端激光制造装备省部共建协同创新中心”启动仪式暨激光先进制造研究院建院20周年庆典在屏峰校区举行... -->
+                                                    {{newsTrendsList0.content}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="clear: both;height: 135px;overflow-y: auto;padding-top: 5px;box-sizing: border-box;">
+                                            <ul>
+                                                <li v-for="(item,index) in newsTrendsIndexList"
+                                                    @click="toNewsTrends(index+1)">
+                                                    <div class="noticeLiItemBox"
+                                                        style="overflow: hidden;cursor: pointer;">
+                                                        <div
+                                                            style="width: 78%;float: left;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">
+                                                            <i class="el-icon-arrow-right"></i>
+                                                            <span style="letter-spacing: 1px;">{{item.name}}</span>
+                                                        </div>
+                                                        <div style="width: 20%;position: relative;float: right;">
+                                                            {{item.time}}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="conMiddle_r">
+                                <!-- 通知公告 -->
+                                <section class="cardBox notice">
+                                    <div class="cardHead">
+                                        <div class="cardHeadTitle">通知公告</div>
+                                        <div class="cardHeadMore" @click="toNotice(0)">
+                                            <a>more
+                                                <i class="el-icon-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="cardBody">
+                                        <div style="clear: both;height: 235px;overflow-y: auto;padding-right: 5px;">
+                                            <ul>
+                                                <li v-for="(item,index) in noticeList" @click="toNotice(index)"
+                                                    style="cursor: pointer;">
+                                                    <div class="noticeLiItemBox" style="overflow: hidden;">
+                                                        <div
+                                                            style="width: 80%;float: left;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">
+                                                            <i class="el-icon-arrow-right"></i>
+                                                            <span style="letter-spacing: 1px;">{{item.name}}</span>
+                                                        </div>
+                                                        <div style="width: 20%;position: relative;float: right;">
+                                                            {{item.time}}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="conRight">
+                            <!-- 实验中心 -->
+                            <section class="cardBox">
+                                <div class="cardBody">
+                                    <img src="./static/images/laboratory.png" alt=""
+                                        style="width: 100%;height: 120px;object-fit: contain;border-radius: 3px;">
+                                    <div>
+                                        <ul>
+                                            <li style="margin: 5px 0;">
+                                                <a href="http://hxsyzx.dodokon.com" target="_blank">
+                                                    <div
+                                                        style="display: flex;height: 50px;line-height: 50px; border: 1px solid #bed7e5;border-radius: 5px;overflow: hidden;">
+                                                        <div style="flex: 1;color: #006298;font-size: 12px;">
+                                                            <img src="./static/images/labIcon1.png" alt=""
+                                                                style="width: 20%;margin: 10px 5px;float: left;">
+                                                            <span>化学实验教学中心</span>
+                                                        </div>
+                                                        <div style="width: 8px;background-color: #f9d17f;"></div>
+                                                    </div>
+                                                </a>
+
+                                            </li>
+                                            <li style="margin: 5px 0;">
+                                                <a href="http://www.hxhg.zjut.edu.cn" target="_blank">
+                                                    <div
+                                                        style="display: flex;height: 50px;line-height: 50px; border: 1px solid #bed7e5;border-radius: 3px;overflow: hidden;">
+                                                        <div style="flex: 1;color: #006298;font-size: 12px;">
+                                                            <img src="./static/images/labIcon2.png" alt=""
+                                                                style="width: 20%;margin: 10px 5px;float: left;">
+                                                            <span>化工实验教学中心</span>
+                                                        </div>
+                                                        <div style="width: 8px;background-color: #a4dbc6;"></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li style="margin: 5px 0;">
+                                                <div
+                                                    style="display: flex;height: 50px;line-height: 50px; border: 1px solid #bed7e5;border-radius: 3px;overflow: hidden;">
+                                                    <div style="flex: 1;color: #006298;font-size: 12px;">
+                                                        <img src="./static/images/labIcon3.png" alt=""
+                                                            style="width: 20%;margin: 10px 5px;float: left;">
+                                                        <span>化工实训中心</span>
+                                                    </div>
+                                                    <div style="width: 8px;background-color: #cfb5ee;"></div>
+                                                </div>
+                                            </li>
+                                            <li style="margin-top: 5px;">
+                                                <div
+                                                    style="display: flex;height: 50px;line-height: 50px; border: 1px solid #bed7e5;border-radius: 3px;overflow: hidden;">
+                                                    <div style="flex: 1;color: #006298;font-size: 12px;">
+                                                        <img src="./static/images/labIcon4.png" alt=""
+                                                            style="width: 20%;margin: 10px 5px;float: left;">
+                                                        <span>虚拟仿真实验教学中心</span>
+                                                    </div>
+                                                    <div style="width: 8px;background-color: #8bb8dc;"></div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- 获奖图片 -->
+                            <section class="cardBox" style="margin-top: 11px;">
+                                <div class="cardBody"
+                                    style="font-size: 0;position: relative;padding: 0;margin: 5px;cursor: pointer;"
+                                    @click="toCompetition">
+                                    <img src="./static/images/jshj.png" alt=""
+                                        style="width: 100%;height: 130px;object-fit: contain;border-radius: 3px;">
+                                    <!-- <div class="awardBox" style="position: absolute;bottom: 0;">竞赛获奖</div> -->
+                                </div>
+                            </section>
+                        </div>
+                        <!-- 友情链接 -->
+                        <!-- <div style="display: flex;clear: both;text-align: center;padding: 20px 80px;">
+                            <div class="itemBox">
+                                <el-select v-model="value1" placeholder="化学实验教学中心" @change="tonewLisk(value1)">
+                                    <el-option  label="请选择" value="请选择">
+                                    </el-option>
+                                    <el-option v-for="(item,index) in options1" :key="index" :label="item.label"
+                                        :value="item.link">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                            <div class="itemBox">
+                                <el-select v-model="value2" placeholder="化工实验教学中心" @change="tonewLisk(value2)">
+                                    <el-option  label="请选择" value="请选择"></el-option>
+                                    <el-option v-for="(item,index) in options2" :key="index" :label="item.label"
+                                        :value="item.link">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                            <div class="itemBox">
+                                <el-select v-model="value3" placeholder="化工实训中心" @change="tonewLisk(value3)">
+                                    <el-option  label="请选择" value="请选择"></el-option>
+                                    <el-option v-for="(item,index) in options3" :key="index" :label="item.label"
+                                        :value="item.link">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                            <div class="itemBox">
+                                <el-select v-model="value4" placeholder="虚拟仿真实验教学中心" @change="tonewLisk(value4)">
+                                    <el-option  label="请选择" value="请选择"></el-option>
+                                    <el-option v-for="(item,index) in options4" :key="index" :label="item.label"
+                                        :value="item.link">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div> -->
+                    </section>
+                    <!-- 主体信息 -->
+                    <section v-if="currentPage == 2">
+                        <!-- 左侧二级菜单 -->
+                        <div class="mainConL">
+                            <section class="cardBox navlist">
+                                <div class="cardHead">
+                                    <div class="cardHeadTitle">{{itemName2}}</div>
+                                </div>
+                                <div class="cardBody" style="height: 510px;overflow-y: auto;user-select: none;">
+                                    <el-collapse v-model="activeName" @change="handleChange" accordion
+                                        v-if="itemName3_list[currentCont.item2].type && itemName3_list[currentCont.item2].type=='列表栏目'">
+                                        <el-collapse-item :title="item.name" :name="index"
+                                            v-for="(item,index) in itemName3_list" :key="index"></el-collapse-item>
+                                    </el-collapse>
+                                    <el-collapse v-model="activeName" @change="handleChange" accordion v-else>
+                                        <el-collapse-item :title="item.name" :name="index"
+                                            v-for="(item,index) in itemName3_list" :key="index">
+                                            <div class="itemName4Box" v-for="(lis,index2) in item.lis"
+                                                :class="{itemName4Active:currentCont.item3==index2}"
+                                                @click="toItemsInfo(index,index2,lis)">
+                                                <i class="el-icon-arrow-right"></i>
+                                                {{lis.name}}
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- 右侧主体内容 -->
+                        <div class="mainConR">
+                            <section class="cardBox infoCon">
+                                <!-- 面包屑导航 -->
+                                <div style="padding: 8px 10px;user-select: none;background-image: linear-gradient(#fff,#ebf2f6);">
+                                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                                        <el-breadcrumb-item to="{'href','./index.html'}" @click="toIndex">首页
+                                        </el-breadcrumb-item>
+                                        <el-breadcrumb-item>{{itemName2}}</el-breadcrumb-item>
+                                        <el-breadcrumb-item v-if="itemName3!=''">
+                                            {{itemName3_list[currentCont.item2].name}}</el-breadcrumb-item>
+                                    </el-breadcrumb>
+                                </div>
+                                <!-- <div class="cardBody cardBodyInfo" style="height: 515px;overflow-y: auto;">
+                                    <h4 style="margin: 10px 0;text-align: center;">
+                                        {{itemName3_list[currentCont.item2].lis[currentCont.item3].name}}</h4>
+                                    <p v-html="itemName3_list[currentCont.item2].lis[currentCont.item3].content"
+                                        v-if="itemName3_list[currentCont.item2]">
+                                    </p>
+                                    <div v-if="itemName3_list[currentCont.item2].lis[currentCont.item3]">
+                                        <ul v-if="isShowItem4==false">
+                                            <li v-for="(item,index) in itemName3_list[currentCont.item2].lis[currentCont.item3].lis"
+                                                @click="toItem4Info(item)" class="item4Info">
+                                                <i class="el-icon-arrow-right"></i>
+                                                {{item.name}}
+                                            </li>
+                                        </ul>
+                                        <div v-else>
+                                            <div v-html="item4Info.content"></div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- 列表栏目 -->
+                                <div class="cardBody cardBodyInfo"
+                                    v-if="itemName3_list[currentCont.item2].type && itemName3_list[currentCont.item2].type=='列表栏目'">
+                                    <ul class="listUl" style="height: 460px;overflow-y: auto;padding-top: 30px;box-sizing: border-box;">
+                                        <li v-for="(item,index) in currentList[currentPages-1]"
+                                            @click="toItem4Info(item)" class="item4Info">
+                                            <i class="el-icon-arrow-right"></i>
+                                            {{item.name}}
+                                        </li>
+                                    </ul>
+                                    <!-- 分页 -->
+                                    <div style="font-size: 12px;text-align: right;margin: 20px 0 5px 0;user-select: none;">
+                                        <span>每页</span><span style="margin: 0 5px;">14条</span><span>记录</span>
+                                        <span>总共</span><span style="margin: 0 5px;">12条</span><span>记录</span>
+                                        <span style="cursor: pointer;" @click="toFristPage">第一页</span>
+                                        <span style="cursor: pointer;" @click="toPrvePage"><i class="el-icon-d-arrow-left"></i>上一页</span>
+                                        <span style="cursor: pointer;" @click="toNextPage">下一页<i class="el-icon-d-arrow-right"></i></span>
+                                        <span style="cursor: pointer;" @click="toLastPage">尾页</span>
+                                        <span>页码</span><span>{{currentPages}}/{{totalPages}}</span>
+                                        <div style="display: inline-block;">
+                                            跳转到
+                                            <el-input v-model="skipPage" style="width: 50px;" size="mini" @change="pageSkip"></el-input>
+                                            <!-- <input type="text" name="" id="" style="width: 50px;"> -->
+                                            页
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 主体内容 -->
+                                <div class="cardBody cardBodyInfo" style="height: 515px;overflow-y: auto;font-family: 'STHeiti';line-height: 2;text-align: justify;letter-spacing: 1px;" v-else>
+                                    <h4 style="margin: 20px 0;text-align: center;">
+                                        {{itemName3_list[currentCont.item2].lis[currentCont.item3].name}}</h4>
+                                    <p v-html="itemName3_list[currentCont.item2].lis[currentCont.item3].content"
+                                        v-if="itemName3_list[currentCont.item2]">
+                                    </p>
+                                    <div v-if="itemName3_list[currentCont.item2].lis[currentCont.item3]">
+                                        <ul v-if="isShowItem4==false">
+                                            <li v-for="(item,index) in itemName3_list[currentCont.item2].lis[currentCont.item3].lis"
+                                                @click="toItem4Info(item)" class="item4Info">
+                                                <i class="el-icon-arrow-right"></i>
+                                                {{item.name}}
+                                            </li>
+                                        </ul>
+                                        <div v-else>
+                                            <div v-html="item4Info.content"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                    <!-- 搜索结果 -->
+                    <section v-if="currentPage==4">
+                        <!-- 左侧二级菜单 -->
+                        <div class="mainConL">
+                            <section class="cardBox navlist">
+                                <div class="cardHead">
+                                    <div class="cardHeadTitle">搜索结果</div>
+                                </div>
+                                <div class="cardBody" style="height: 510px;overflow-y: auto;user-select: none;">
+                                    <div class="itemName4Box" v-for="(item,index) in searchlist"
+                                        :class="{itemName4Active:searchCurrent==index}" @click="changeRes(index)">
+                                        <i class="el-icon-arrow-right"></i>
+                                        {{item.title}}
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- 右侧主体内容 -->
+                        <div class="mainConR">
+                            <section class="cardBox infoCon">
+                                <!-- 面包屑导航 -->
+                                <div style="padding: 10px;user-select: none;">
+                                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                                        <el-breadcrumb-item to="{'href','./index.html'}" @click="toIndex">首页
+                                        </el-breadcrumb-item>
+                                        <el-breadcrumb-item>搜索结果</el-breadcrumb-item>
+                                    </el-breadcrumb>
+                                </div>
+                                <div class="cardBody cardBodyInfo" style="height: 515px;overflow-y: auto;">
+                                    <h4 style="margin: 10px 0;text-align: center;">{{searchlist[searchCurrent].title}}
+                                    </h4>
+                                    <p v-html="searchlist[searchCurrent].content"></p>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- 页面底部 -->
+            <footer>
+                <div style="height: 5px;background-color: #1b6c98;"></div>
+                <!-- <div style="display: flex;"> -->
+                    <div class="mainBottom" style="flex: 1;position: relative;">
+                        <ul style="overflow: hidden;">
+                            <li v-for="(item,index) in linkList" style="width: 25%;float: left;font-size: 12px;line-height: 2;">
+                                <a :href="item.link" target="blank">
+                                    {{item.name}}
+                                </a>
+                            </li>
+                        </ul>
+                        <div style="position: absolute;top: 50%;right: 40px;transform: translateY(-50%);">
+                            <img src="./static/images/wx.png" alt="" style="width: 100px;">
+                            <!-- <p style="font-size: 14px;color: #676767;">实验加</p> -->
+                        </div>
+                    </div>
+                    <!-- <div style="text-align: center;padding-bottom: 20px;">
+                        <img src="./static/images/wx.png" alt="" style="width: 150px;">
+                    </div> -->
+                <!-- </div> -->
+                
+                <div class="aboutBox">
+                    <p>{{footerMesg}}</p>
+                    <p>从{{visitorTime}}起，您是第{{visitorNum}}位访问者</p>
+                </div>
+                
+            </footer>
+            <!-- <footer>
+                <div style="height: 5px;background-color: #1b6c98;"></div>
+                <div class="mainBottom"></div>
+                <div class="aboutBox">
+                    <p>{{footerMesg}}</p>
+                    <p>从{{visitorTime}}起，您是第{{visitorNum}}位访问者</p>
+                </div>
+                <div style="text-align: center;padding-bottom: 20px;">
+                    <img src="./static/images/wx.jpg" alt="" style="width: 100px;">
+                    <p style="font-size: 14px;color: #676767;">微信考试系统</p>
+                </div>
+            </footer> -->
+        </div>
+    </div>
+</body>
+<script src="./lib/js/jquery.min.js"></script>
+<script src="./lib/js/vue.js"></script>
+<!-- import JavaScript -->
+<script src="./node_modules/element-ui/lib/index.js"></script>
+<script>
+    //创建Vue实例,得到 ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //接口API
+            // baseApi: 'http://192.168.0.226:4062/',
+            baseApi:'https://zgdhx.api.dodokon.com/',
+            // 页面tabs列表
+            tabslist: [],
+            tabslist_len: 1,
+            // 首页 模块数据
+            modelList: ['预约共享', '国家级精品课程', '中心风采', '新闻动态', '通知公告'],
+            // 站内搜索 输入框值
+            inpWebSearch: '',
+            searchlist: [],
+            // 当前展示搜索结果
+            searchCurrent: 0,
+            // 中心简介
+            centerMesg: '',
+            // 底部信息
+            footerMesg: '',
+            // 网站访问起始日期
+            visitorTime: "2020年11月7日",
+            // 网站访问人数
+            visitorNum: 100,
+            // 友情链接 列表
+            linkList: [],
+            // 预约共享 列表
+            orderShareList: [],
+            // 国家级精品课程
+            countryCourse: [],
+            //国家级虚拟仿真实验教学示范型项目
+            virtualCourse: [],
+            //省级精品课程
+            provincialCourse: [],
+            // 新闻动态 重点
+            newsTrendsList0: '',
+            // 新闻动态 列表（只展示两个）
+            newsTrendsList: [],
+            newsTrendsIndexList: [],
+            // 通知公告 列表（只展示九条个）
+            noticeList: [],
+            noticeAllList: [],
+            // 轮播图列表
+            swiperlist: [{
+                src: './static/images/swiper.png'
+            }, {
+                src: './static/images/banner2.jpg'
+            }, {
+                src: './static/images/banner3.jpg'
+            }],
+            // 当前页面
+            currentPage: 1,
+            // 当前所属一级栏目
+            currentItem: -1,
+            // 当前所属二级栏目
+            itemName2: '中心概况',
+            // 当前二级栏目 下的 三级栏目列表
+            itemName3_list: [],
+            // 当前所属三级栏目
+            itemName3: '中心简介',
+            itemName3Index: 0,
+            // 当前所属四级栏目
+            itemName4: '',
+            // 主题内容 图标列表
+            infoImgList: [{
+                src: './static/images/swiper.png'
+            }, {
+                src: './static/images/swiper.png'
+            }, {
+                src: './static/images/swiper.png'
+            }, {
+                src: './static/images/swiper.png'
+            }],
+            // 当前所在三级栏目
+            activeName: '0',
+            isShow: false,
+            // 箭头方向
+            arrowList: ['1'],
+            currentCont: {
+                item2: 0,
+                item3: 0
+            },
+            detailCon: {},
+            isShowItem4: false,
+            item4Info: {},
+            // 友情链接 下拉框
+            options1: [],
+            value1: '',
+            options2: [],
+            value2: '',
+            options3: [],
+            value3: '',
+            options4: [],
+            value4: '',
+            // 详情页
+            defaultList: [],
+            pageIndex:0,
+            // 总共页数
+            totalPages:5,
+            // 当前页面
+            currentPages:1,
+            // 跳转到的页面
+            skipPage:'',
+            // 当前页数据列表
+            currentList:[],
+        },
+        methods: {
+            // 跳到第一页
+            toFristPage(){
+                this.currentPages=1
+            },
+            // 跳转到最后一页
+            toLastPage(){
+                this.currentPages=this.totalPages
+            },
+            // 上一页
+            toPrvePage(){
+                this.currentPages = this.currentPages==1 ? this.currentPages : this.currentPages-1
+            },
+            // 下一页
+            toNextPage(){
+                this.currentPages = this.currentPages==this.totalPages ? this.currentPages : this.currentPages+1
+            },
+            // 输入页面跳转
+            pageSkip(){
+                // console.log(this.skipPage)
+                this.currentPages = this.skipPage>=1 && this.skipPage<=this.totalPages ? this.skipPage : this.currentPages
+            },
+            // 友情链接跳转
+            tonewLisk(value){
+                console.log(1231233)
+                if(value=='请选择'){
+                    return
+                }else{
+                    console.log(value)
+                    window.open(value)
+                }
+                
+                // window.open("https://blog.csdn.net/qq_43639296/article/details/93895513")
+            },
+            changeRes(index) {
+                this.searchCurrent = index
+            },
+            async searchRes(e) {
+                console.log(e)
+                this.currentPage = 4
+                $.ajax({
+                    type: "get",
+                    url: vm.baseApi + "api/v1/html/HtmlData/GetSearch?value=" + e,
+                    success: await function (res) {
+                        console.log(res);
+                        vm.searchlist=[]
+                        if(res.data.length==0){
+                            vm.searchlist.push({
+                                title: '搜索不到',
+                                content: '抱歉，没有您想要的结果'
+                            })
+                        }else{
+                            for (var i = 0; i < res.data.length; i++) {
+                                vm.searchlist.push({
+                                    title: res.data[i].title,
+                                    content: res.data[i].content
+                                })
+                            }
+                        }
+                        
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            },
+            toItem4Info(item) {
+                console.log(item)
+                this.item4Info = item
+                this.isShowItem4 = true
+            },
+            // 通知公告 新闻动态 预约共享 详情
+            toDetailInfo(item, e) {
+                if (e == '预约共享') {
+                    this.defaultList = this.orderShareList
+                } else if (e == '通知公告') {
+                    this.defaultList = this.noticeAllList
+                } else if (e == '新闻动态') {
+                    this.defaultList = this.newsTrendsList
+                }
+                this.itemName2 = e
+                this.itemName3 = item.name
+                this.currentPage = 3;
+                // this.detailCon = {
+                //     name: item.name,
+                //     content: item.content
+                // }
+                console.log('列表在此！')
+                console.log(this.defaultList)
+            },
+            // 通知公告 列表
+            toNotice(e) {
+                this.itemName2 = '通知公告'
+                this.currentPage = 2;
+                this.currentCont.item3 = e
+                this.itemName3_list = [{
+                    name: '通知公告',
+                    lis: this.noticeAllList
+                }]
+            },
+            // 新闻动态 列表
+            toNewsTrends(e) {
+                this.itemName2 = '新闻动态'
+                this.currentPage = 2;
+                this.currentCont.item3 = e
+                this.itemName3_list = [{
+                    name: '新闻动态',
+                    lis: this.newsTrendsList
+                }]
+            },
+            // 预约共享 列表
+            toOrderShare(e) {
+                this.itemName2 = '预约共享'
+                this.currentPage = 2;
+                this.currentCont.item3 = e
+                this.itemName3_list = [{
+                    name: '预约共享',
+                    lis: this.orderShareList
+                }]
+            },
+            // 精品课程 列表
+            toElaborateCourse() {
+                this.itemName2 = '精品课程'
+                this.currentPage = 2;
+                this.itemName3_list = [{
+                    name: '国家级精品课程',
+                    lis: this.countryCourse
+                }, {
+                    name: '国家级虚拟仿真实验教学示范型项目',
+                    lis: this.virtualCourse
+                }, {
+                    name: '省级精品课程',
+                    lis: this.provincialCourse
+                }]
+            },
+            // 点击进入 底级栏目
+            toItemsInfo(index, index2, lis) {
+                this.isShowItem4 = false
+                // console.log('look')
+                // console.log(index,index2)
+                this.currentCont.item2 = index
+                this.currentCont.item3 = index2
+                // console.log(this.itemName3_list[this.currentCont.item2].lis[this.currentCont.item3].content)
+                // this.activeName = val
+                // this.itemName3Index = val
+                this.itemName4 = lis.name
+            },
+            isShowList(index) {
+                if (this.arrowList[index] == 0) {
+                    this.arrowList[index] = 1
+                } else {
+                    this.arrowList[index] = 0
+                }
+                console.log(this.arrowList[index])
+            },
+            // 前往首页
+            toIndex() {
+                this.currentItem = -1
+                this.currentPage = 1;
+                // 清空首页搜索框
+                this.inpWebSearch=''
+            },
+            // 前往一级栏目详情页
+            toItemInfo(index, item) {
+                this.activeName = 0
+                this.currentCont.item2 = 0
+                this.itemName2 = item.name;
+                // console.log('在这里看')
+                // console.log(item.name)
+                // console.log(this.itemName2)
+                this.currentItem = index
+                this.currentPage = 2;
+                // console.log('uuid在这里')
+                // console.log(item.uuid)
+                // console.log(item.name)
+                $.ajax({
+                    type: "get",
+                    url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList/",
+                    data: {
+                        type: item.name,
+                        value: ''
+                    },
+                    //请求成功
+                    success: async function (res) {
+                        vm.itemName3_list = [];
+                        // console.log(123123)
+                        // console.log(res)
+                        for (var i = 0; i < res.data.length; i++) {
+                            var lis = []
+                            let current = res.data[i]
+                            // this.itemName3=res.data[0].columnTitle
+                            // console.log('看这里')
+                            // console.log(current)
+                            await $.ajax({
+                                type: "get",
+                                url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList/",
+                                data: {
+                                    type: current.columnTitle,
+                                    value: ''
+                                },
+                                success: function (resquest) {
+                                    // console.log(456)
+                                    // console.log(current.columnTitle)
+                                    // console.log(resquest)
+                                    if (resquest.data.length > 0) {
+                                        for (var i = 0; i < resquest.data.length; i++) {
+                                            let current2 = resquest.data[i]
+                                            // console.log(current2)
+                                            // 查询是否有四级课程
+                                            var item4List = []
+                                            $.ajax({
+                                                type: "get",
+                                                url: vm.baseApi +
+                                                    "api/v1/html/HtmlData/AllColumnList/",
+                                                data: {
+                                                    type: current2.columnTitle,
+                                                    value: ''
+                                                },
+                                                success: function (res2) {
+                                                    // console.log('我在这里')
+                                                    // console.log(res2)
+                                                    if (res2.data.length >
+                                                        0) {
+                                                        console.log('我在这里')
+                                                        console.log(res2)
+                                                        for (var i = 0; i <
+                                                            res2.data.length; i++) {
+                                                            item4List.push({
+                                                                name: res2.data[i].columnTitle,
+                                                                content: res2.data[i].columnContent,
+                                                                type: res2.data[i].columnModel
+                                                            })
+                                                        }
+                                                    } else {
+                                                        item4List = []
+                                                    }
+                                                },
+                                                error: function (err) {
+                                                    console.log(err)
+                                                }
+                                            })
+                                            lis.push({
+                                                name: resquest.data[i]
+                                                    .columnTitle,
+                                                uuid: resquest.data[i]
+                                                    .columnUuid,
+                                                content: resquest.data[i]
+                                                    .columnContent,
+                                                type: resquest.data[i]
+                                                    .columnModel,
+                                                lis: item4List
+                                            })
+                                        }
+                                    } 
+                                    else {
+                                        lis.push({
+                                            name: current.columnTitle,
+                                            uuid: current.columnUuid,
+                                            content: current.columnContent,
+                                            type: current.columnModel
+                                        })
+                                    }
+                                },
+                                error: function (err) {
+                                    console.log(err.status);
+                                }
+                            })
+                            vm.itemName3_list.push({
+                                name: current.columnTitle,
+                                uuid: current.columnUuid,
+                                content: current.columnContent,
+                                type: current.columnModel,
+                                lis: lis
+                            })
+                            vm.arrowList.push('0')
+                            // console.log(vm.itemName3_list)
+                        }
+                        // console.log('在这里看列表')
+                        // console.log(vm.itemName3_list)
+                        // console.log(8888)
+                        // console.log(vm.itemName3_list[vm.currentCont.item2].type)
+                        // console.log(vm.itemName3_list[vm.currentCont.item2].lis.length)
+                        if(vm.itemName3_list[vm.currentCont.item2].type=='列表栏目'){
+                            // console.log(123123456456)
+                            // 计算总页数
+                            vm.totalPages=Math.ceil(vm.itemName3_list[vm.currentCont.item2].lis.length/12)
+                            // console.log(vm.totalPages)
+                            // 当前页码
+                            var index=0;
+                            // 页面数据显示最大条数
+                            var length=12;
+                            // 数据总条数
+                            var totalLength=vm.itemName3_list[vm.currentCont.item2].lis.length;
+                            // 接收的数据数组
+                            var totalArr=vm.itemName3_list[vm.currentCont.item2].lis
+                            for(index=0;index<vm.totalPages;index++){
+                                // console.log('第'+ index +'页')
+                                var params=[]
+                                // 向每页数据数组中插入的条数
+                                var pagelength = totalLength-index*length > length ? length : totalLength-index*length
+                                // console.log(totalArr[0])
+                                for(var j=index*length;j<index*length+pagelength;j++){
+                                    params.push({
+                                        name: totalArr[j].name,
+                                        uuid: totalArr[j].uuid,
+                                        content: totalArr[j].content,
+                                        type: totalArr[j].type
+                                    })
+                                }
+                                vm.currentList.push(
+                                    params
+                                )
+                                // console.log(params)
+                            }
+                            // console.log('看这里')
+                            // console.log(vm.currentList)
+                        }
+                    },
+                    //请求失败，包含具体的错误信息
+                    error: function (err) {
+                        console.log(err.status);
+                    }
+                })
+                
+            },
+            // 左侧列表切换
+            handleChange(val) {
+                this.currentCont.item2 = val
+                this.currentCont.item3 = 0
+                console.log(1231232)
+                console.log(this.itemName3_list[val])
+                // this.itemName3=this.itemName3_list[val].name
+                if(this.itemName3_list[val].type=='列表栏目'){
+                    console.log(123123456456)
+                    // 计算总页数
+                    this.totalPages=Math.ceil(this.itemName3_list[val].lis.length/12)
+                    console.log(this.totalPages)
+                    // 当前页码
+                    var index=0;
+                    // 页面数据显示最大条数
+                    var length=12;
+                    // 数据总条数
+                    var totalLength=this.itemName3_list[val].lis.length;
+                    // 接收的数据数组
+                    var totalArr=this.itemName3_list[val].lis
+                    vm.currentList=[]
+                    for(index=0;index<this.totalPages;index++){
+                        console.log('第'+ index +'页')
+                        var params=[]
+                        // 向每页数据数组中插入的条数
+                        var pagelength = totalLength-index*length > length ? length : totalLength-index*length
+                        // console.log(totalArr[0])
+                        for(var j=index*length;j<index*length+pagelength;j++){
+                            params.push({
+                                name: totalArr[j].name,
+                                uuid: totalArr[j].uuid,
+                                content: totalArr[j].content,
+                                type: totalArr[j].type
+                            })
+                        }
+                        vm.currentList.push(
+                            params
+                        )
+                        console.log(params)
+                    }
+                    console.log('看这里')
+                    console.log(vm.currentList)
+                }
+            },
+            // 前往竞赛获奖
+            toCompetition() {
+                var params = []
+                var num = 0
+                this.tabslist.forEach((item, index) => {
+                    if (item.name == '人才培养') {
+                        console.log('结果')
+                        console.log(index)
+                        params = item
+                        num = index
+                    }
+                });
+                this.toItemInfo(num, params)
+            }
+        }
+    });
+    $(function () {
+        // 请求数据(页面一级栏目)
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求地址
+            url: vm.baseApi + "api/v1/html/HtmlData/IndexCatalog",
+            data: {
+                value: ''
+            },
+            //请求成功
+            success: function (res) {
+                // console.log(123)
+                // console.log(res)
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.tabslist.push({
+                        name: res.data[i].columnTitle,
+                        uuid: res.data[i].columnUuid
+                    })
+                }
+                vm.tabslist_len = vm.tabslist.length
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        });
+        // 预约共享
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList",
+            data: {
+                type: '预约共享',
+                value: ''
+            },
+            //请求成功
+            success: function (res) {
+                console.log('预约共享')
+                console.log(res)
+                for (var i = 0; i < res.data.length; i++) {
+                    var time = res.data[i].addTime.substring(0, 11)
+                    vm.orderShareList.push({
+                        name: res.data[i].columnTitle,
+                        uuid: res.data[i].columnUuid,
+                        content: res.data[i].columnContent,
+                        time: time
+                    })
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        // 国家级精品课程
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList",
+            data: {
+                type: '国家级精品课程',
+                value: ''
+            },
+            //请求成功
+            success: function (res) {
+                // console.log(123)
+                // console.log(res)
+                // if(modelList[i]=='预约共享'){
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.countryCourse.push({
+                        name: res.data[i].columnTitle,
+                        uuid: res.data[i].columnUuid,
+                        content: res.data[i].columnContent
+                    })
+                }
+                // }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        // 国家级虚拟仿真实验教学中心
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList",
+            data: {
+                type: '国家级虚拟仿真实验教学中心',
+                value: ''
+            },
+            //请求成功
+            success: function (res) {
+                // console.log(123)
+                // console.log(res)
+                // if(modelList[i]=='预约共享'){
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.virtualCourse.push({
+                        name: res.data[i].columnTitle,
+                        uuid: res.data[i].columnUuid,
+                        content: res.data[i].columnContent
+                    })
+                }
+                // }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        // 省级精品课程
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/AllColumnList",
+            data: {
+                type: '省级精品课程',
+                value: ''
+            },
+            //请求成功
+            success: function (res) {
+                // console.log(123)
+                // console.log(res)
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.provincialCourse.push({
+                        name: res.data[i].columnTitle,
+                        uuid: res.data[i].columnUuid,
+                        content: res.data[i].columnContent
+                    })
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        // 新闻动态
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/NewsTrendsList",
+            //请求成功
+            success: function (res) {
+                console.log('新闻动态')
+                console.log(res)
+                // var length = 2;
+                // if (res.data.length < 2) {
+                //     length = res.data.length
+                // }
+                for (var i = 0; i < res.data.length; i++) {
+                    var time = res.data[i].addTime.substring(0, 11)
+                    if (res.data[i].newsPic != null) {
+                        var arr = res.data[i].newsPic.split(',')
+                    } else {
+                        arr = ['laboratory.png']
+                    }
+                    vm.newsTrendsList.push({
+                        name: res.data[i].newsTitle,
+                        uuid: res.data[i].newsUuid,
+                        content: res.data[i].newsContent,
+                        time: time,
+                        picture: arr
+                    })
+                    if (i == 0) {
+                        var re1 = new RegExp("<.+?>", "g"); //匹配html标签的正则表达式，"g"是搜索匹配多个符合的内容
+                        var re2 = new RegExp("&nbsp;", "g");
+                        var msg = res.data[0].newsContent.replace(re1, ''); //执行替换成空字符
+                        msg = msg.replace(re2, '')
+                        vm.newsTrendsList0 = {
+                            name: res.data[0].newsTitle,
+                            uuid: res.data[0].newsUuid,
+                            content: msg,
+                            time: time,
+                            picture: arr
+                        }
+                    }
+
+                    if (i < 6 && i > 0) {
+                        vm.newsTrendsIndexList.push({
+                            name: res.data[i].newsTitle,
+                            uuid: res.data[i].newsUuid,
+                            content: res.data[i].newsContent,
+                            time: time,
+                            picture: arr
+                        })
+                    }
+                }
+                console.log(12123)
+                console.log(vm.newsTrendsList0)
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        // 通知公告
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/NewsNoticeList",
+            //请求成功
+            success: function (res) {
+                console.log('通知公告')
+                console.log(res)
+                var length = 9;
+                if (res.data.length < 9) {
+                    length = res.data.length
+                }
+                for (var i = 0; i < length; i++) {
+                    var time = res.data[i].addTime.substring(0, 11)
+                    vm.noticeList.push({
+                        name: res.data[i].proclamationTitle,
+                        uuid: res.data[i].proclamationUuid,
+                        content: res.data[i].proclamationContent,
+                        time: time
+                    })
+                }
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.noticeAllList.push({
+                        name: res.data[i].proclamationTitle,
+                        uuid: res.data[i].proclamationUuid,
+                        content: res.data[i].proclamationContent,
+                        time: time
+                    })
+                }
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        })
+        //网站访问量
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求地址
+            url: vm.baseApi + "api/v1/html/HtmlData/SetVisit",
+            // data: { },
+            //请求成功
+            success: function (res) {
+                // console.log(123456789)
+                // console.log(res)
+                vm.visitorTime = res.data.date;
+                vm.visitorNum = res.data.datalist;
+            },
+            //请求失败，包含具体的错误信息
+            error: function (err) {
+                console.log(err.status);
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/ExternalList",
+            success: function (res) {
+                // console.log('网站链接')
+                // console.log(res)
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.linkList.push({
+                        name: res.data[i].remark,
+                        link: res.data[i].link
+                    })
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        // 中心风采
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/RestsDataList?value=中心风采&type=轮播图",
+            success: function (res) {
+                console.log('中心风采')
+                console.log(res)
+                var arr = res.data.accessory.split(',')
+                console.log(arr)
+                vm.swiperlist = arr
+                let params = res.data.accessory
+                console.log(vm.baseApi + 'UploadFiles/NesFile/Picture/' + arr[0])
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        // footerMesg
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/RestsDataList?value=底部数据&type=文本",
+            success: function (res) {
+                console.log('底部数据')
+                console.log(res)
+                vm.footerMesg = res.data.accessory
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        // centerMesg
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/RestsDataList?value=中心简介&type=文本",
+            success: function (res) {
+                console.log('中心简介')
+                console.log(res)
+                vm.centerMesg = res.data.accessory
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        // 友情链接 LinkTypeList
+        $.ajax({
+            type: "get",
+            url: vm.baseApi + "api/v1/html/HtmlData/LinkTypeList",
+            success: function (res) {
+                console.log('友情链接')
+                console.log(res)
+                // for(var i=0;i<res.data.firstType.length;i++){
+                //     vm.options1.push({
+                //         value: i,
+                //         label: res.data.firstType[i].remark,
+                //         link:res.data.firstType[i].link
+                //     })
+                // }
+                // for(var i=0;i<res.data.secondType.length;i++){
+                //     vm.options2.push({
+                //         value: i,
+                //         label: res.data.secondType[i].remark,
+                //         link:res.data.secondType[i].link
+                //     })
+                // }
+                // for(var i=0;i<res.data.thirdType.length;i++){
+                //     vm.options3.push({
+                //         value: i,
+                //         label: res.data.thirdType[i].remark,
+                //         link:res.data.thirdType[i].link
+                //     })
+                // }
+                // for(var i=0;i<res.data.fourthType.length;i++){
+                //     vm.options4.push({
+                //         value: i,
+                //         label: res.data.fourthType[i].remark,
+                //         link:res.data.fourthType[i].link
+                //     })
+                // }
+                for(var i=0;i<res.data.firstType.length;i++){
+                    vm.linkList.push({
+                        value: i,
+                        label: res.data.firstType[i].remark,
+                        link:res.data.firstType[i].link
+                    })
+                }
+                for(var i=0;i<res.data.secondType.length;i++){
+                    vm.linkList.push({
+                        value: i,
+                        label: res.data.secondType[i].remark,
+                        link:res.data.secondType[i].link
+                    })
+                }
+                for(var i=0;i<res.data.thirdType.length;i++){
+                    vm.linkList.push({
+                        value: i,
+                        label: res.data.thirdType[i].remark,
+                        link:res.data.thirdType[i].link
+                    })
+                }
+                for(var i=0;i<res.data.fourthType.length;i++){
+                    vm.linkList.push({
+                        value: i,
+                        label: res.data.fourthType[i].remark,
+                        link:res.data.fourthType[i].link
+                    })
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    });
+</script>
+
+</html>

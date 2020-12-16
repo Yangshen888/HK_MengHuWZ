@@ -1,0 +1,11 @@
+﻿
+Scaffold-DbContext “Data Source=192.168.0.147;Initial Catalog=xingxing;Persist Security Info=True;User ID=sa;Password=root” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Context haiKanChemistryContext -force
+
+optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=heqiaodaoshi;Persist Security Info=True;User ID=hq;Password=Haikan051030");
+
+"DefaultConnection": "Data Source=.;Initial Catalog=haikancms;Persist Security Info=True;User ID=HaikanCMS;Password=haikan051030!;MultipleActiveResultSets=true;Enlist=true;Pooling=true;Max Pool Size=300;Min Pool Size=0;Connection Lifetime=300;packet size=1000;pooling=false"
+
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=haikancms;Persist Security Info=True;User ID=HaikanCMS;Password=haikan051030!");
+
+                var conncectstr = ConfigurationManager.ConnectionStrings.DefaultConnection;
+                optionsBuilder.UseSqlServer(conncectstr);

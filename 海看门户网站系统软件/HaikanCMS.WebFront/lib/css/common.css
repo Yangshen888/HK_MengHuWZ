@@ -1,0 +1,177 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/*滚动条整体样式*/
+html::-webkit-scrollbar {
+    /*高宽分别对应横竖滚动条的尺寸*/
+    width: 10px;     
+    height: 10px;
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面小方块*/
+html::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面轨道*/
+html::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+
+ /* 滚动条整体样式 */
+div::-webkit-scrollbar {
+    /*高宽分别对应横竖滚动条的尺寸*/
+    width: 4px;     
+    height: 4px;
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面小方块*/
+div::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面轨道*/
+div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+
+/* 滚动条整体样式 */
+section::-webkit-scrollbar {
+    /*高宽分别对应横竖滚动条的尺寸*/
+    width: 4px;     
+    height: 4px;
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面小方块*/
+section::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面轨道*/
+section::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+
+
+/* 滚动条整体样式 */
+.listUl::-webkit-scrollbar {
+    /*高宽分别对应横竖滚动条的尺寸*/
+    width: 4px;     
+    height: 4px;
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面小方块*/
+.listUl::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+    scrollbar-arrow-color:red;
+}
+/*滚动条里面轨道*/
+.listUl::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+i{
+    font-style: normal;
+}
+
+img{
+    user-select: none;
+}
+
+input{
+    user-select: none;
+}
+
+.main{
+    width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.mainCon{
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+
+.cardBox{
+    /* background-color: pink; */
+    border: 1px solid #bed7e5;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.cardHead{
+    font-size: 14px;
+    background-image: linear-gradient(#fff,#ebf2f6);
+    padding: 5px 10px;
+    display: flex;
+    user-select: none;
+}
+
+.cardHeadTitle{
+    color: #223e6f;
+    flex: 1;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.cardHeadMore a{
+    color: #f19149;
+    font-size: 12px;
+}
+
+.cardHeadMore i{
+    vertical-align: middle;
+}
+
+.cardBody{
+    padding: 10px;
+    overflow: hidden;
+}
+
+.mainBottom{
+    padding: 20px;
+    padding-right:160px;
+
+    display: flex;
+    border-top: 2px solid #f6bb8e;
+    background-color: #056498;
+}
+
+.mainBottom a{
+    color: #fff;
+}
+
+.itemBox{
+    width: 25%;
+    float: left;
+}

@@ -1,0 +1,10 @@
+.aboutBox{
+    clear: both;
+    padding: 10px 0;
+    text-align: center;
+    line-height: 2;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #676767;
+    /* padding-bottom: 50px; */
+}

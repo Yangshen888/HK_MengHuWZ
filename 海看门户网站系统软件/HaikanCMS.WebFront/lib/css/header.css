@@ -1,0 +1,40 @@
+.headBox{
+    /* background-color: purple; */
+    font-size: 0;
+    position: relative;
+    font-family: "Microsoft YaHei";
+    user-select: none;
+}
+
+.tabsBox{
+    background-color: #056498;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 0;
+    border-bottom: 2px solid #f19149;
+}
+
+.tabsItem{
+    float: left;
+    width: 108px;
+    text-align: center;
+    cursor: pointer;
+    color: rgb(217, 217, 217);
+}
+.tabsItem span{
+    display: inline-block;
+    width: 100%;
+    border-right: 1px solid #ccc;
+    letter-spacing: 2px;
+    user-select: none;
+}
+.lastSpan{
+    border: 0 !important;
+}
+.activeItem{
+    color: #fff;
+}
+
+.tabsItem:hover span{
+    color: #fff;
+}

@@ -1,0 +1,329 @@
+.mainTop {
+    overflow: hidden;
+}
+
+.conLeft {
+    width: 18%;
+    float: left;
+}
+
+.conMiddle {
+    width: 64%;
+    float: left;
+}
+
+.conRight {
+    width: 18%;
+    float: left;
+}
+
+.conRight .cardBox {
+    margin-left: 10px;
+}
+
+/* 站内搜索 */
+.webSearch {
+    margin: 10px 10px 10px 0;
+}
+
+/* 预约共享 */
+.orderShare {
+    margin-right: 10px;
+}
+
+.cardBodyLiItemBox {
+    font-size: 12px;
+    color: #585858;
+    line-height: 2;
+}
+
+.cardBodyLiTimeBox {
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    color: #ccc;
+    display: flex;
+    padding: 0 5px;
+}
+
+.cardBodyLiTime {
+    margin: 0 5px 0 10px;
+}
+
+.dotLine {
+    height: 0;
+    margin-top: 9px;
+    flex: 1;
+    border-bottom: 2px dotted #ccc;
+}
+
+/* 精品课程 */
+.elaborateCourse {
+    margin: 9px 10px 0 0;
+    padding: 5px 0;
+    height: 268px;
+    overflow-y: auto;
+}
+.courseItemBox{
+    cursor: pointer;
+}
+.courselis {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    margin: 5px 10px;
+    border: 1px solid #bed7e5;
+    box-sizing: border-box;
+}
+
+.courseItemBox {
+    float: left;
+    /* margin-right: 10px; */
+    min-width: 50%;
+}
+
+.circle {
+    float: left;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 11px 5px;
+}
+
+/* 中心风采 */
+.centerColorfulSwiper {
+    width: 58%;
+    float: left;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.centerColorfulCont {
+    float: right;
+    width: 40%;
+    height: 180px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border: 1px solid #bed7e5;
+    line-height: 2;
+}
+
+.centerColorfulContTitle {
+    text-align: center;
+    font-size: 14px;
+    color: #223e6f;
+}
+
+.centerColorfulDes {
+    text-indent: 2em;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: justify;
+}
+
+.conMiddle_l {
+    width: 50%;
+    float: left;
+}
+
+.newsTrends {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.conMiddle_r {
+    width: 50%;
+    float: right;
+}
+
+.notice {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+/* 新闻动态 */
+.newsTrendsSwiper {
+    width: 40%;
+    float: left;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.newsTrendsCont {
+    float: right;
+    width: 56%;
+    height: 100px;
+    /* overflow-y: auto; */
+    /* color: #223e6f; */
+}
+
+.newsTrendsContTitle {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #223e6f;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.newsTrendsDes {
+    margin-top: 5px;
+    font-size: 10px;
+    text-indent: 2em;
+    line-height: 1.5;
+    text-align: justify;
+    letter-spacing: 2px;
+    color: #8d8d8d;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.newsTrendsLiItemBox {
+    display: flex;
+    margin-top: 10px;
+}
+
+.newsTrendsBox{
+    padding-left: 20px;
+    flex:1;
+    display: flex;
+    flex-direction: column;
+}
+
+.newsTrendsTit{
+    flex: 1;
+    font-size: 12px;
+}
+
+.newsTrendsTimeBox{
+    font-size: 10px;
+    text-align: right;
+    display: flex;
+}
+
+.newsTrendsTime{
+    margin-left: 10px;
+}
+
+.noticeLiItemBox{
+    font-size: 12px;
+    color: #585858;
+    line-height: 2;
+    border-bottom: 2px dotted #ccc;
+}
+
+.noticeLiTime{
+    float: right;
+}
+
+.awardBox{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 14px;
+    background-color: rgba(215,215,215,0.8);
+}
+
+/* 详情页 */
+.mainConL {
+    width: 24%;
+    float: left;
+}
+
+.itemName4Active{
+    color: #569bf1;
+}
+.itemName4Box {
+    line-height: 2;
+    padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+.active {
+    background-color: #bed7e5 !important;
+}
+
+.navlist {
+    height: 560px;
+    margin-right: 10px;
+}
+
+.infoCon {
+    height: 560px;
+}
+
+.mainConR {
+    width: 76%;
+    float: right;
+}
+
+.itemName3lis {
+    margin: 10px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    /* background-color: pink; */
+    color: #2670a0;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid #bed7e5;
+    cursor: pointer;
+    user-select: none;
+}
+
+.itemName3lis:hover {
+    background-color: #d2edfa;
+}
+
+.cardBodyInfo {
+    padding: 0 30px;
+}
+.cardBodyInfo img{
+    max-width: 100%;
+}
+.textBox {
+    font-size: 12px;
+    color: #585858;
+    text-indent: 2em;
+    text-align: justify;
+    letter-spacing: 1px;
+    line-height: 1.5;
+}
+
+.infoImgBox {
+    margin: 20px 0;
+}
+
+.imgBox {
+    font-size: 0;
+}
+
+.item4Info{
+    font-size: 14px;
+    line-height: 2;
+    /* border-bottom: 2px dotted#f2f5fc; */
+    border-bottom: 1px solid#f2f5fc;
+}
+
+.cardHeadMore{
+    cursor: pointer;
+}
